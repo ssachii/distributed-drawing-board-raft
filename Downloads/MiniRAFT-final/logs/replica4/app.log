@@ -1,0 +1,26 @@
+{"level":"info","ts":"2026-04-16T10:42:06.627Z","msg":"WAL replayed","term":0,"votedFor":"","entries":0,"commitIndex":0}
+{"level":"info","ts":"2026-04-16T10:42:06.627Z","msg":"loaded log from WAL","entries":0,"commitIndex":0}
+{"level":"info","ts":"2026-04-16T10:42:06.628Z","msg":"dialed peer","peer":"replica1:9001"}
+{"level":"info","ts":"2026-04-16T10:42:06.628Z","msg":"dialed peer","peer":"replica2:9001"}
+{"level":"info","ts":"2026-04-16T10:42:06.628Z","msg":"dialed peer","peer":"replica3:9001"}
+{"level":"info","ts":"2026-04-16T10:42:06.629Z","msg":"attempting catch-up sync","fromIndex":1}
+{"level":"info","ts":"2026-04-16T10:42:06.644Z","msg":"catch-up sync: already up-to-date","peer":"replica3:9001"}
+{"level":"info","ts":"2026-04-16T10:42:06.644Z","msg":"starting RAFT node","id":"replica4","peers":["replica1:9001","replica2:9001","replica3:9001"]}
+{"level":"info","ts":"2026-04-16T10:42:06.644Z","msg":"replica started","replicaId":"replica4","grpcPort":"9001","httpPort":"8081","dataDir":"/data"}
+{"level":"info","ts":"2026-04-16T10:42:06.644Z","msg":"gRPC server listening","port":"9001"}
+{"level":"info","ts":"2026-04-16T10:42:07.168Z","msg":"starting election","term":1,"id":"replica4"}
+{"level":"warn","ts":"2026-04-16T10:42:07.168Z","msg":"RequestVote RPC failed","peer":"replica1:9001","term":1,"error":"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing: dial tcp 172.18.0.5:9001: connect: connection refused\""}
+{"level":"warn","ts":"2026-04-16T10:42:07.168Z","msg":"RequestVote RPC failed","peer":"replica2:9001","term":1,"error":"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing: dial tcp 172.18.0.4:9001: connect: connection refused\""}
+{"level":"info","ts":"2026-04-16T10:42:07.169Z","msg":"election won","term":1,"votes":2}
+{"level":"info","ts":"2026-04-16T10:42:07.169Z","msg":"becoming leader","term":1}
+{"level":"info","ts":"2026-04-16T10:45:01.176Z","msg":"becoming follower","term":24,"leaderID":""}
+{"level":"info","ts":"2026-04-16T10:45:12.376Z","msg":"RequestVote received","candidateId":"replica3","term":41,"lastLogIndex":16,"lastLogTerm":1}
+{"level":"info","ts":"2026-04-16T10:45:12.377Z","msg":"becoming follower","term":41,"leaderID":""}
+{"level":"info","ts":"2026-04-16T10:45:12.378Z","msg":"vote granted","candidateId":"replica3","term":41}
+{"level":"info","ts":"2026-04-16T10:45:42.359Z","msg":"starting election","term":42,"id":"replica4"}
+{"level":"warn","ts":"2026-04-16T10:45:42.360Z","msg":"RequestVote RPC failed","peer":"replica2:9001","term":42,"error":"rpc error: code = Unavailable desc = name resolver error: produced zero addresses"}
+{"level":"warn","ts":"2026-04-16T10:45:42.360Z","msg":"RequestVote RPC failed","peer":"replica1:9001","term":42,"error":"rpc error: code = Unavailable desc = name resolver error: produced zero addresses"}
+{"level":"info","ts":"2026-04-16T10:45:42.364Z","msg":"election won","term":42,"votes":2}
+{"level":"info","ts":"2026-04-16T10:45:42.365Z","msg":"becoming leader","term":42}
+{"level":"info","ts":"2026-04-16T10:46:04.860Z","msg":"shutdown signal received, draining in-flight RPCs..."}
+{"level":"info","ts":"2026-04-16T10:46:04.860Z","msg":"replica shutdown complete"}
