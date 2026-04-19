@@ -107,75 +107,6 @@ Editing any `.go` file in `replica/` or `gateway/` triggers Air to rebuild and r
 
 ---
 
-## Demo Steps (for Presentation)
-
-### 1. Basic drawing & multi-user sync
-
-1. Open `http://localhost:3000` in two browser tabs.
-2. Draw on one tab — the stroke appears on the other tab after RAFT commits it.
-3. Check the **Cluster Status** sidebar — the leader is highlighted green.
-
-### 2. Leader failover (zero downtime)
-
-```bash
-# Option A: from the UI — set Mode = "Graceful stop", click Unleash Chaos
-# Option B: from terminal
-docker stop miniraft-replica1   # or whichever is leader
-```
-
-- Watch the sidebar: the killed node turns red, the other three nodes elect a new leader (within ~1 s).
-- Continue drawing — strokes still commit.
-- Restart the killed replica: `docker start miniraft-replica1`
-- It rejoins as Follower and catches up the missed log entries (visible as log length equalising).
-
-### 3. Hard kill (SIGKILL)
-
-```bash
-# UI: Mode = "Hard kill"
-# or:
-docker kill miniraft-replica2
-```
-
-Same behaviour as graceful — RAFT handles it identically.
-
-### 4. Network partition
-
-```bash
-# UI: Mode = "Network partition", Target = "replica3" → "Partition Network"
-# or via API:
-curl -X POST http://localhost:8080/chaos \
-  -H "Content-Type: application/json" \
-  -d '{"target":"replica3","mode":"partition"}'
-```
-
-- `replica3` is disconnected from the Docker network. It cannot send or receive gRPC traffic.
-- The remaining 3 nodes maintain quorum and continue operating.
-- After 15 seconds the partition auto-heals; `replica3` catches up via `SyncLog`.
-- Click **Heal All Partitions** to heal immediately.
-
-### 5. Hot-reload (dev mode only)
-
-```bash
-make dev
-# Edit any .go file in replica/ or gateway/
-# Air rebuilds the container; RAFT re-elects; clients stay connected
-```
-
-### 6. Undo / Redo
-
-- Draw a stroke → press **Ctrl+Z** (or click Undo) → the stroke disappears for all users.
-- Press **Ctrl+Y** (or Redo) → the stroke reappears.
-- Each undo/redo is a RAFT log entry, replicated to all replicas.
-
-### 7. Run the automated smoke test
-
-```bash
-bash scripts/smoke-test.sh
-# or: make smoke
-```
-
----
-
 ## Service Ports
 
 | Service | Port | Purpose |
@@ -246,12 +177,6 @@ MiniRAFT/
     ├── replica3/
     └── replica4/
 ```
-
----
-
-## Team Responsibilities
-
-See **Team Allocation** section below for individual GitHub push responsibilities.
 
 ---
 
